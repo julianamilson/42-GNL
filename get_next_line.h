@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:30 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/01 21:48:18 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:41:04 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ char	*ft_strdup(const char *str);
 void	*ft_calloc(size_t number, size_t size);
 
 size_t	ft_strclen(const char *s, char c);
+
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
