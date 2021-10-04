@@ -6,54 +6,11 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:38 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/04 18:48:26 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/04 20:53:04 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (dstsize > 0)
-	{
-		while (src[i] != '\0' && i < dstsize - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	while (src[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*sub;
-	size_t	slen;
-
-	if (s == NULL)
-		return (NULL);
-	slen = ft_strclen(s, '\0');
-	if (len >= slen)
-		len = slen - start;
-	if (slen >= start)
-	{
-		sub = (char *)ft_calloc(len + 1, sizeof(char));
-		if (sub == NULL)
-			return (NULL);
-		ft_strlcpy(sub, &s[start], len + 1);
-	}
-	else
-		sub = ft_calloc(1, 1);
-	return (sub);
-}
 
 size_t	ft_strclen(const char *s, char c)
 {
@@ -65,23 +22,32 @@ size_t	ft_strclen(const char *s, char c)
 	return (i);
 }
 
-void	*ft_calloc(size_t number, size_t size)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*ptr;
+	char	*sub;
+	size_t	slen;
 	size_t	i;
-	size_t	j;
 
-	i = number * size;
-	ptr = malloc(i);
-	if (!ptr || i < 0)
+	if (s == NULL)
 		return (NULL);
-	j = 0;
-	while (j < i)
+	slen = ft_strclen(s, '\0');
+	if (len >= slen)
+		len = slen - start;
+	if (slen >= start)
 	{
-		ptr[j] = '\0';
-		j++;
+		sub = (char *)malloc((len + 1) * sizeof(char));
+		sub[len + 1] = '\0';
+		if (sub == NULL)
+			return (NULL);
+		i = 0;
+		while (s[start + i] != '\0' && i < len)
+		{
+			sub[i] = s[i];
+			i++;
+		}
+		sub[i] = '\0';
 	}
-	return ((void *)ptr);
+	return (sub);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -94,7 +60,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	len1 = ft_strclen(s1, '\0');
 	len2 = ft_strclen(s2, '\0');
-	sr = (char *)ft_calloc((len1 + len2 + 1), sizeof(char));
+	sr = (char *)malloc((len1 + len2 + 1) * sizeof(char));
+	sr[len1 + len2 + 1] = '\0';
 	if (sr == NULL)
 		return (NULL);
 	i = 0;
@@ -133,6 +100,7 @@ char	*ft_strdup(const char *str)
 
 	len = ft_strclen(str, '\0') + 1;
 	ptr = (char *)malloc(len);
+	ptr[len] = '\0';
 	if (ptr == NULL)
 		return (NULL);
 	i = 0;
@@ -141,6 +109,5 @@ char	*ft_strdup(const char *str)
 		ptr[i] = str[i];
 		i++;
 	}
-	ptr[i] = '\0';
 	return (ptr);
 }

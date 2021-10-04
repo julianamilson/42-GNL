@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:30 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/04 18:49:05 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/04 20:56:12 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 # define GET_NEXT_LINE_H
 # include <unistd.h>
 # include <stdlib.h>
-# define BUFFER_SIZE 5
 
 /**
  * @brief Write a function which returns a line read from a file descriptor
  * @param FD File descriptor to read from
- * @return Read line: correct behavior, null: nothing else to read or an error occurred
+ * @return Read line, or null if nothing else to read or an error occurred
  */
 char	*get_next_line(int fd);
 
@@ -34,8 +33,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *str, int c);
 
 char	*ft_strdup(const char *str);
-
-void	*ft_calloc(size_t number, size_t size);
 
 size_t	ft_strclen(const char *s, char c);
 
