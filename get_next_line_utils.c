@@ -6,11 +6,54 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:38 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/01 21:48:23 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:38:47 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+
+	i = 0;
+	if (dstsize > 0)
+	{
+		while (src[i] != '\0' && i < dstsize - 1)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	while (src[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*sub;
+	size_t	slen;
+
+	if (s == NULL)
+		return (NULL);
+	slen = ft_strclen(s, '\0');
+	if (len >= slen)
+		len = slen - start;
+	if (slen >= start)
+	{
+		sub = (char *)ft_calloc(len + 1, sizeof(char));
+		if (sub == NULL)
+			return (NULL);
+		ft_strlcpy(sub, &s[start], len + 1);
+	}
+	else
+		sub = ft_calloc(1, 1);
+	return (sub);
+}
 
 size_t	ft_strclen(const char *s, char c)
 {

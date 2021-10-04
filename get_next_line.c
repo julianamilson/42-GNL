@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/01 21:48:08 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:37:25 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,36 @@ NULL: nothing else to read or an error occurred
 */
 char	*get_next_line(int fd)
 {
-	char static	*bbackup;
+		char static	*bbackup;
 	char		*buffer;
+	char		*temp;
 	char		*line;
 	size_t		read_chars;
 	size_t		pos_n;
+	size_t		zero;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+		if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = ft_strdup("");
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	while (!ft_strchr(line, '\n'))
+	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!buffer)
+		return (NULL);
+	temp = ft_strdup("");
+	while (!ft_strchr(temp, '\n'))
 	{
 		read_chars = read(fd, buffer, BUFFER_SIZE);
+		if (read_chars == -1 || read_chars == 0)
+		{
+			free(buffer);
+			return (NULL);
+		}
 		buffer[read_chars] = 0;
-		line = ft_strjoin(line, buffer);
+		temp = ft_strjoin(temp, buffer);
 	}
-	pos_n = ft_strclen(line, '\n');
-	char *banana = ft_strdup(line + pos_n + 1);
-
-	printf("banana: |%s|", banana);
+	pos_n = ft_strclen(temp, '\n');
+	line = ft_substr(temp, 0, pos_n + 1);
+	zero = ft_strclen(temp, '\0');
+	bbackup = ft_substr(temp, pos_n + 1, zero);
+	free(temp);
+	printf("backup: |%s|", bbackup);
 	return (line);
 }
