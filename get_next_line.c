@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/04 18:37:25 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:48:06 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ NULL: nothing else to read or an error occurred
 */
 char	*get_next_line(int fd)
 {
-		char static	*bbackup;
+	char static	*bbackup;
 	char		*buffer;
 	char		*temp;
 	char		*line;
@@ -32,12 +32,14 @@ char	*get_next_line(int fd)
 	size_t		pos_n;
 	size_t		zero;
 
-		if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
 		return (NULL);
 	temp = ft_strdup("");
+	if (bbackup)
+		temp = ft_strdup(bbackup);
 	while (!ft_strchr(temp, '\n'))
 	{
 		read_chars = read(fd, buffer, BUFFER_SIZE);
