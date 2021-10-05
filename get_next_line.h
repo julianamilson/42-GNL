@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:30 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/04 20:56:12 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/04 21:07:07 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,27 @@
 char	*get_next_line(int fd);
 
 /**
+ * @brief looks for the first occurrence of C in the string pointed to by STR.
+ * @param STR points to the string to be scanned
+ * @param C character to be searched
+ */
+char	*ft_strchr(const char *str, int c);
+
+/**
+ * @brief takes a string as an argument and returns its length.
+ * @param S source string
+ * @param C character to be searched
+ */
+size_t	ft_strclen(const char *s, char c);
+
+/**
+ * @brief duplicates a string, it copies the STR to a new pointer.
+ * @param STR the string to be copied.
+ * @return a new address with the same string of str.
+ */
+char	*ft_strdup(const char *str);
+
+/**
  * @brief Allocates and returns a new string, result of s1s2's concatenation.
  * @param S1 prefix string
  * @param S2 suffix string
@@ -30,12 +51,13 @@ char	*get_next_line(int fd);
  */
 char	*ft_strjoin(char const *s1, char const *s2);
 
-char	*ft_strchr(const char *str, int c);
-
-char	*ft_strdup(const char *str);
-
-size_t	ft_strclen(const char *s, char c);
-
+/**
+ * @brief Allocates and returns a substring from the string ’s’.
+ * @param S string from which to create the substring.
+ * @param START start index of the substring in the string ’s’.
+ * @param LEN The maximum length of the substring.
+ * @return The substring. NULL if the allocation fails.
+ */
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
