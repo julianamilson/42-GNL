@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/04 20:53:23 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/05 16:51:19 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static char	*get_content(char *bbackup, char *buffer, char *line, int fd)
 {
 	char		*temp;
 	int			read_chars;
+	size_t		bef_n;
 	size_t		pos_n;
-	size_t		zero;
 
 	temp = ft_strdup("");
 	if (bbackup)
@@ -30,13 +30,14 @@ static char	*get_content(char *bbackup, char *buffer, char *line, int fd)
 			free(buffer);
 			return (NULL);
 		}
-		buffer[read_chars] = 0;
+		else
+			buffer[read_chars] = '\0';
 		temp = ft_strjoin(temp, buffer);
 	}
-	pos_n = ft_strclen(temp, '\n');
-	line = ft_substr(temp, 0, pos_n + 1);
-	zero = ft_strclen(temp, '\0');
-	bbackup = ft_substr(temp, pos_n + 1, zero);
+	bef_n = ft_strclen(temp, '\n');
+	line = ft_substr(temp, 0, bef_n + 1);
+	pos_n = ft_strclen(temp, '\0');
+	bbackup = ft_substr(temp, bef_n, pos_n + 1);
 	free(temp);
 	return (line);
 }
@@ -49,10 +50,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	buffer[BUFFER_SIZE + 1] = '\0';
+	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
+	buffer[BUFFER_SIZE] = '\0';
 	line = ft_strdup("");
 	line = get_content(bbackup, buffer, line, fd);
 	return (line);

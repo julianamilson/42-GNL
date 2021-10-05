@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:38 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/04 20:53:04 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/05 15:19:47 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,53 +28,42 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	slen;
 	size_t	i;
 
-	if (s == NULL)
-		return (NULL);
-	slen = ft_strclen(s, '\0');
+	if (start > ft_strclen(s, '\0'))
+		return (ft_strdup(""));
+	slen = ft_strclen(&s[start], '\0');
 	if (len >= slen)
 		len = slen - start;
-	if (slen >= start)
+	sub = malloc((len + 1) * sizeof(char));
+	if (sub == NULL)
+		return (NULL);
+	i = 0;
+	while (s[start + i] != '\0' && i < len)
 	{
-		sub = (char *)malloc((len + 1) * sizeof(char));
-		sub[len + 1] = '\0';
-		if (sub == NULL)
-			return (NULL);
-		i = 0;
-		while (s[start + i] != '\0' && i < len)
-		{
-			sub[i] = s[i];
-			i++;
-		}
-		sub[i] = '\0';
+		sub[i] = s[start + i];
+		i++;
 	}
+	sub[i] = '\0';
 	return (sub);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*sr;
-	size_t	len1;
-	size_t	len2;
+	size_t	len;
 	size_t	i;
-	size_t	j;
 
-	len1 = ft_strclen(s1, '\0');
-	len2 = ft_strclen(s2, '\0');
-	sr = (char *)malloc((len1 + len2 + 1) * sizeof(char));
-	sr[len1 + len2 + 1] = '\0';
+	len = ft_strclen(s1, '\0') + ft_strclen(s2, '\0');
+	sr = malloc((len + 1));
 	if (sr == NULL)
 		return (NULL);
+	sr[len] = '\0';
 	i = 0;
-	while (s1[i] != '\0')
+	while (i < len)
 	{
-		sr[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j] != '\0')
-	{
-		sr[i + j] = s2[j];
-		j++;
+		if (*s1)
+			sr[i++] = *s1++;
+		else
+			sr[i++] = *s2++;
 	}
 	return (sr);
 }
@@ -98,11 +87,11 @@ char	*ft_strdup(const char *str)
 	size_t	len;
 	size_t	i;
 
-	len = ft_strclen(str, '\0') + 1;
-	ptr = (char *)malloc(len);
-	ptr[len] = '\0';
+	len = ft_strclen(str, '\0');
+	ptr = malloc(len + 1);
 	if (ptr == NULL)
 		return (NULL);
+	ptr[len] = '\0';
 	i = 0;
 	while (str[i] != '\0')
 	{

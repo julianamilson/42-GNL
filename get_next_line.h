@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:30 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/04 21:07:07 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/05 16:52:32 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GET_NEXT_LINE_H
 # include <unistd.h>
 # include <stdlib.h>
+# define BUFFER_SIZE 15
 
 /**
  * @brief Write a function which returns a line read from a file descriptor
