@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:38 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/05 15:19:47 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:46:20 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (start > ft_strclen(s, '\0'))
 		return (ft_strdup(""));
 	slen = ft_strclen(&s[start], '\0');
-	if (len >= slen)
-		len = slen - start;
-	sub = malloc((len + 1) * sizeof(char));
+	if (len > slen)
+		len = slen;
+	sub = malloc((len + 1));
 	if (sub == NULL)
 		return (NULL);
 	i = 0;
