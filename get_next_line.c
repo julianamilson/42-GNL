@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/06 20:26:52 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/06 20:27:42 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,6 @@ static char	*get_content(char **bbackup, char *buffer, char *line, int fd)
 	{
 		read_chars = read(fd, buffer, BUFFER_SIZE);
 		temp = read_temp(temp, read_chars, line);
-		// if (read_chars <= 0)
-		// {
-		// 	if (!*temp)
-		// 	{
-		// 		free(temp);
-		// 		temp = NULL;
-		// 		return (NULL);
-		// 	}
-		// 	line = temp;
-		// 	temp = NULL;
-		// 	return (line);
-		// }
 		buffer[read_chars] = '\0';
 		temp = ft_strjoin(temp, buffer);
 	}
