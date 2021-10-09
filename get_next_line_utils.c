@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:38 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/08 16:02:09 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/08 23:51:52 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*ft_strchr(const char *str, int c)
 	temp = (char *) str;
 	while (*temp != (char) c)
 	{
-		if (*temp ==  0)
+		if (*temp == 0)
 			return (NULL);
 		temp++;
 	}
