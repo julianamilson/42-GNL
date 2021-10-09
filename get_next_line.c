@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/09 02:08:39 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/09 03:47:19 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	*verify(char **temp, char **line)
 	if (!**temp)
 	{
 		*temp = NULL;
+		free(*line);
+		free(*temp);
 		return (NULL);
 	}
 	line = temp;
@@ -39,7 +41,6 @@ static char	*get_content(char **bbackup, char *buffer, char *line, int fd)
 		buffer[read_chars] = '\0';
 		temp = ft_strjoin(temp, buffer);
 	}
-	free(buffer);
 	bef_n = ft_strclen(temp, '\n');
 	line = ft_substr(temp, 0, bef_n + 1);
 	*bbackup = ft_strdup(&temp[bef_n + 1]);
@@ -57,7 +58,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
+	{
+		free(buffer);
 		return (NULL);
+	}
 	if (read(fd, buffer, 0) < 0)
 	{
 		free(buffer);
@@ -67,5 +71,6 @@ char	*get_next_line(int fd)
 		bbackup = ft_strdup("");
 	line = NULL;
 	line = get_content(&bbackup, buffer, line, fd);
+	free(buffer);
 	return (line);
 }
