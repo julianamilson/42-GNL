@@ -6,27 +6,23 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/06 20:27:42 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/08 21:58:29 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char *read_temp(char *temp, int read_chars, char *line)
+static char *verify(char **temp, char **line)
 {
-	if (read_chars <= 0)
+	if (!**temp)
 	{
-		if (!*temp)
-		{
-			free(temp);
-			temp = NULL;
-			return (NULL);
-		}
-		line = temp;
+		free(*temp);
 		temp = NULL;
-		return (line);
+		return (NULL);
 	}
-	return (temp);
+	line = temp;
+	temp = NULL;
+	return (line);
 }
 
 static char	*get_content(char **bbackup, char *buffer, char *line, int fd)
@@ -39,14 +35,14 @@ static char	*get_content(char **bbackup, char *buffer, char *line, int fd)
 	while (!ft_strchr(temp, '\n'))
 	{
 		read_chars = read(fd, buffer, BUFFER_SIZE);
-		temp = read_temp(temp, read_chars, line);
+		if (read_chars <= 0)
+			return (verify(&temp, line));
 		buffer[read_chars] = '\0';
 		temp = ft_strjoin(temp, buffer);
 	}
 	bef_n = ft_strclen(temp, '\n');
 	line = ft_substr(temp, 0, bef_n + 1);
 	*bbackup = ft_strdup(&temp[bef_n + 1]);
-	free(temp);
 	return (line);
 }
 

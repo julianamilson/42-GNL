@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:38 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/05 18:46:20 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/08 16:02:09 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,26 @@ size_t	ft_strclen(const char *s, char c)
 	while (s[i] != '\0' && s[i] != c)
 		i++;
 	return (i);
+}
+
+char	*ft_strdup(const char *str)
+{
+	char	*ptr;
+	size_t	len;
+	size_t	i;
+
+	len = ft_strclen(str, '\0');
+	ptr = malloc(len + 1);
+	if (ptr == NULL)
+		return (NULL);
+	ptr[len] = '\0';
+	i = 0;
+	while (str[i] != '\0')
+	{
+		ptr[i] = str[i];
+		i++;
+	}
+	return (ptr);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -70,33 +90,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char	*ft_strchr(const char *str, int c)
 {
-	while (*str != '\0')
-	{
-		if ((unsigned char) *str == (unsigned char) c)
-			return ((char *) str);
-		str++;
-	}
-	if (c == 0)
-		return ((char *) str);
-	return (NULL);
-}
+	char	*temp;
 
-char	*ft_strdup(const char *str)
-{
-	char	*ptr;
-	size_t	len;
-	size_t	i;
-
-	len = ft_strclen(str, '\0');
-	ptr = malloc(len + 1);
-	if (ptr == NULL)
-		return (NULL);
-	ptr[len] = '\0';
-	i = 0;
-	while (str[i] != '\0')
+	temp = (char *) str;
+	while (*temp != (char) c)
 	{
-		ptr[i] = str[i];
-		i++;
+		if (*temp ==  0)
+			return (NULL);
+		temp++;
 	}
-	return (ptr);
+	return (temp);
 }
