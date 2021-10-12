@@ -6,46 +6,52 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/09 03:47:19 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/12 18:18:27 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*verify(char **temp, char **line)
+static char	*verify(char **bbackup, ssize_t bef_n)
 {
-	if (!**temp)
+	char	*line;
+	char	*temp;
+
+	if (bef_n == 0)
 	{
-		*temp = NULL;
-		free(*line);
-		free(*temp);
-		return (NULL);
+		if (!**bbackup)
+		{
+			free(*bbackup);
+			*bbackup = NULL;
+			return (NULL);
+		}
+		line = *bbackup;
+		*bbackup = NULL;
+		return (line);
 	}
-	line = temp;
-	*temp = NULL;
-	return (*line);
+	temp = *bbackup;
+	line = ft_substr(temp, 0, bef_n + 1);
+	*bbackup = ft_strdup(temp + bef_n + 1);
+	free(temp);
+	return (line);
 }
 
-static char	*get_content(char **bbackup, char *buffer, char *line, int fd)
+static char	*get_content(char **bbackup, char *buffer, int fd)
 {
 	char	*temp;
 	int		read_chars;
-	size_t	bef_n;
 
-	temp = *bbackup;
-	while (!ft_strchr(temp, '\n'))
+	while (!ft_strchr(*bbackup, '\n'))
 	{
 		read_chars = read(fd, buffer, BUFFER_SIZE);
 		if (read_chars <= 0)
-			return (verify(&temp, &line));
+			return (verify(bbackup, 0));
 		buffer[read_chars] = '\0';
-		temp = ft_strjoin(temp, buffer);
+		temp = *bbackup;
+		*bbackup = ft_strjoin(temp, buffer);
+		free(temp);
 	}
-	bef_n = ft_strclen(temp, '\n');
-	line = ft_substr(temp, 0, bef_n + 1);
-	*bbackup = ft_strdup(&temp[bef_n + 1]);
-	free(temp);
-	return (line);
+	return (verify(bbackup, ft_strclen(*bbackup, '\n')));
 }
 
 char	*get_next_line(int fd)
@@ -54,23 +60,14 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 ||BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-	{
-		free(buffer);
 		return (NULL);
-	}
-	if (read(fd, buffer, 0) < 0)
-	{
-		free(buffer);
-		return (NULL);
-	}
 	if (!bbackup)
 		bbackup = ft_strdup("");
-	line = NULL;
-	line = get_content(&bbackup, buffer, line, fd);
+	line = get_content(&bbackup, buffer, fd);
 	free(buffer);
 	return (line);
 }
