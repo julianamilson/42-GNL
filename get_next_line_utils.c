@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:38 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/09 02:50:25 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/12 19:05:00 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strdup(const char *str)
 	if (!str)
 		return (NULL);
 	len = ft_strclen(str, '\0');
-	ptr = malloc(len + 1);
+	ptr = (char *)malloc((len + 1) * sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
 	ptr[len] = '\0';
@@ -57,7 +57,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	slen = ft_strclen(&s[start], '\0');
 	if (len > slen)
 		len = slen;
-	sub = malloc((len + 1));
+	sub = (char *)malloc((len + 1) * sizeof(char));
 	if (sub == NULL)
 		return (NULL);
 	i = 0;
@@ -77,7 +77,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 
 	len = ft_strclen(s1, '\0') + ft_strclen(s2, '\0');
-	sr = malloc((len + 1));
+	sr = (char *)malloc((len + 1) * sizeof(char));
 	if (sr == NULL)
 		return (NULL);
 	sr[len] = '\0';

@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/12 18:18:27 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/12 19:45:34 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,16 @@ static char	*get_content(char **bbackup, char *buffer, int fd)
 	{
 		read_chars = read(fd, buffer, BUFFER_SIZE);
 		if (read_chars <= 0)
+		{
+			free(buffer);
 			return (verify(bbackup, 0));
+		}
 		buffer[read_chars] = '\0';
 		temp = *bbackup;
 		*bbackup = ft_strjoin(temp, buffer);
 		free(temp);
 	}
+	free(buffer);
 	return (verify(bbackup, ft_strclen(*bbackup, '\n')));
 }
 
@@ -58,16 +62,13 @@ char	*get_next_line(int fd)
 {
 	static char	*bbackup;
 	char		*buffer;
-	char		*line;
 
-	if (fd < 0 ||BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
 	if (!bbackup)
 		bbackup = ft_strdup("");
-	line = get_content(&bbackup, buffer, fd);
-	free(buffer);
-	return (line);
+	return (get_content(&bbackup, buffer, fd));
 }
