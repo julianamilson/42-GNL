@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/12 19:45:34 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/13 04:54:34 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static char	*verify(char **bbackup, ssize_t bef_n)
 			*bbackup = NULL;
 			return (NULL);
 		}
+		//verificar ate onde vai a linha, pq ta pegando todo o texto depois de \n
 		line = *bbackup;
 		*bbackup = NULL;
 		return (line);
@@ -44,12 +45,12 @@ static char	*get_content(char **bbackup, char *buffer, int fd)
 	while (!ft_strchr(*bbackup, '\n'))
 	{
 		read_chars = read(fd, buffer, BUFFER_SIZE);
+		buffer[read_chars] = '\0';
 		if (read_chars <= 0)
 		{
 			free(buffer);
 			return (verify(bbackup, 0));
 		}
-		buffer[read_chars] = '\0';
 		temp = *bbackup;
 		*bbackup = ft_strjoin(temp, buffer);
 		free(temp);
