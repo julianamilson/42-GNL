@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/13 04:54:34 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/13 19:15:40 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ static char	*verify(char **bbackup, ssize_t bef_n)
 
 	if (bef_n == 0)
 	{
+		if (**bbackup == '\n' && **bbackup + 1 != '\0')
+		{
+			line = ft_strdup("\n");
+			temp = *bbackup;
+			*bbackup = ft_strdup(&temp[1]);
+			free(temp);
+			temp = NULL;
+			return (line);
+		}
 		if (!**bbackup)
 		{
 			free(*bbackup);
