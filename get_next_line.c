@@ -6,38 +6,44 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/13 21:38:24 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/14 08:21:31 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*verify(char **bbackup, ssize_t bef_n)
+static char	*seila(char **bbackup)
+{
+	char	*line;
+	char	*temp;
+
+	if (**bbackup == '\n' && **bbackup + 1 != '\0')
+	{
+		line = ft_strdup("\n");
+		temp = *bbackup;
+		*bbackup = ft_strdup(&temp[1]);
+		free(temp);
+		temp = NULL;
+		return (line);
+	}
+	if (!**bbackup)
+	{
+		free(*bbackup);
+		*bbackup = NULL;
+		return (NULL);
+	}
+	line = *bbackup;
+	*bbackup = NULL;
+	return (line);
+}
+
+static char	*verify(char **bbackup, size_t bef_n)
 {
 	char	*line;
 	char	*temp;
 
 	if (bef_n == 0)
-	{
-		if (**bbackup == '\n' && **bbackup + 1 != '\0')
-		{
-			line = ft_strdup("\n");
-			temp = *bbackup;
-			*bbackup = ft_strdup(&temp[1]);
-			free(temp);
-			temp = NULL;
-			return (line);
-		}
-		if (!**bbackup)
-		{
-			free(*bbackup);
-			*bbackup = NULL;
-			return (NULL);
-		}
-		line = *bbackup;
-		*bbackup = NULL;
-		return (line);
-	}
+		return (seila(bbackup));
 	temp = *bbackup;
 	line = ft_substr(temp, 0, bef_n + 1);
 	*bbackup = ft_strdup(temp + bef_n + 1);
@@ -53,12 +59,12 @@ static char	*get_content(char **bbackup, char *buffer, int fd)
 	while (!ft_strchr(*bbackup, '\n'))
 	{
 		read_chars = read(fd, buffer, BUFFER_SIZE);
-		buffer[read_chars] = '\0';
 		if (read_chars <= 0)
 		{
 			free(buffer);
 			return (verify(bbackup, 0));
 		}
+		buffer[read_chars] = '\0';
 		temp = *bbackup;
 		*bbackup = ft_strjoin(temp, buffer);
 		free(temp);

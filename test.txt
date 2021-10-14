@@ -1,1 +1,3 @@
-oi, tudo sussa?
+gnlTest(53940,0x111a915c0) malloc: Incorrect checksum for freed object 0x7fb6695001d8: probably modified after being freed.
+Corrupt value: 0x0
+gnlTest(53940,0x111a915c0) malloc: *** set a breakpoint in malloc_error_break to debug
