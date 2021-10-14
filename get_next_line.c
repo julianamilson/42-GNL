@@ -6,13 +6,13 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/14 08:21:31 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/14 08:28:57 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*seila(char **bbackup)
+static char	*verify(char **bbackup)
 {
 	char	*line;
 	char	*temp;
@@ -37,13 +37,13 @@ static char	*seila(char **bbackup)
 	return (line);
 }
 
-static char	*verify(char **bbackup, size_t bef_n)
+static char	*get_line(char **bbackup, size_t bef_n)
 {
 	char	*line;
 	char	*temp;
 
 	if (bef_n == 0)
-		return (seila(bbackup));
+		return (verify(bbackup));
 	temp = *bbackup;
 	line = ft_substr(temp, 0, bef_n + 1);
 	*bbackup = ft_strdup(temp + bef_n + 1);
@@ -62,7 +62,7 @@ static char	*get_content(char **bbackup, char *buffer, int fd)
 		if (read_chars <= 0)
 		{
 			free(buffer);
-			return (verify(bbackup, 0));
+			return (get_line(bbackup, 0));
 		}
 		buffer[read_chars] = '\0';
 		temp = *bbackup;
@@ -70,7 +70,7 @@ static char	*get_content(char **bbackup, char *buffer, int fd)
 		free(temp);
 	}
 	free(buffer);
-	return (verify(bbackup, ft_strclen(*bbackup, '\n')));
+	return (get_line(bbackup, ft_strclen(*bbackup, '\n')));
 }
 
 char	*get_next_line(int fd)
