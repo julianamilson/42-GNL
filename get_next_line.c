@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:55:00 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/13 19:15:40 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/13 21:38:24 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static char	*verify(char **bbackup, ssize_t bef_n)
 			*bbackup = NULL;
 			return (NULL);
 		}
-		//verificar ate onde vai a linha, pq ta pegando todo o texto depois de \n
 		line = *bbackup;
 		*bbackup = NULL;
 		return (line);

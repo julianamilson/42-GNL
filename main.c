@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 15:24:32 by jmilson-          #+#    #+#             */
-/*   Updated: 2021/10/13 19:20:44 by jmilson-         ###   ########.fr       */
+/*   Updated: 2021/10/13 19:35:36 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	main(void)
 	char	*str;
 
 	fd_to_read = open("test.txt", O_RDWR);
+	str = get_next_line(fd_to_read);
+	printf("%s", str);
+	free(str);
+	str = NULL;
+	printf("-----\n");
 	str = get_next_line(fd_to_read);
 	printf("%s", str);
 	free(str);
