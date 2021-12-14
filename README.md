@@ -1,6 +1,6 @@
 <div align=center>
 
-<h1>Libft</h1>
+<h1>Get Next Line</h1>
 
 <img src=https://github.com/julianamilson/julianamilson_utils/blob/master/get_next_line.png>
 <br>
